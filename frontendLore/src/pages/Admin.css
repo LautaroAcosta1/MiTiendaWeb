@@ -1,0 +1,305 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+body {
+  margin: 0;
+  background: #f4f6fb;
+}
+
+/* PAGE */
+
+.admin-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CONTAINER */
+
+.adminLogin-container {
+  margin-left: 30%;
+  margin-top: 10%;
+  max-width: 520px;
+  background: white;
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.admin-container {
+  width: 100%;
+  height: 640px;
+  background: rgb(234, 234, 234);
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.admin-section {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-section h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+/* TOP */
+
+.admin-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-top h1 {
+  margin: 0;
+}
+
+.admin-top .logout-btn {
+  background-color: #ff0000;
+}
+
+.admin-top .logout-btn:hover {
+  background-color: #ba2a2a;
+}
+
+/* FORM */
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-container form, .adminLogin-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.admin-container input,
+.admin-container select,
+.adminLogin-container input,
+.adminLogin-container select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.admin-container input:focus,
+.admin-container select:focus,
+.adminLogin-container input:focus,
+.adminLogin-container select:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+/* BUTTONS */
+
+.admin-container button,
+.adminLogin-container button {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #111827;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.admin-container button:hover,
+.adminLogin-container button:hover {
+  background: #1f2933;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #111;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+}
+
+/* CATEGORIES */
+
+.category-admin {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.categories-list {
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.category-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+/* ACTIONS */
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  height: 100%;
+}
+
+/* CARDS */
+
+.admin-search {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.admin-search:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.admin-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  background: #f9fafb;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.1);
+}
+
+.admin-card.active-edit {
+  border: 2px solid #22c55e;
+  background: #ecfdf5;
+}
+
+.admin-card span {
+  font-size: 14px;
+}
+
+.admin-card-btn {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+/* SCROLL */
+
+.products-admin-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* HR */
+
+hr {
+  margin: 24px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* TOAST */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirm-box {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  width: 340px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.2);
+  animation: fadeIn .2s ease;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #1f1f1f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.cancel-btn:hover {
+  background-color: rgb(0, 0, 0);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+
+
