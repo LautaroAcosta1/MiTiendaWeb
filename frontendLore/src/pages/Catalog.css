@@ -69,10 +69,15 @@ body {
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: white;
   padding: 16px;
   border-radius: 18px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px, rgba(0, 0, 0, 0.1) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px,
+              rgba(0, 0, 0, 0.1) 0px 7px 13px -3px,
+              rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   transition: transform .25s, box-shadow .25s;
 }
 
@@ -87,27 +92,62 @@ body {
   border-radius: 14px;
 }
 
-.card img {
+.card .img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.card h2 {
-  margin: 12px 0 6px;
-  font-size: 18px;
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.card p {
+.card-body h2 {
+  margin: 12px 0 6px;
+  font-size: 18px;
+  line-height: 1.1;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+
+  overflow: hidden;
+  min-height: calc(18px * 1.3 * 1);
+}
+
+.card-body p {
   font-size: 14px;
   color: #666;
+  margin-bottom: 8px;
 }
 
 .card span {
   display: block;
-  margin-top: 8px;
   font-weight: bold;
   font-size: 18px;
+}
+
+.price-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.current-price {
+  font-weight: bold;
+  color: #000000;
 }
 
 .btn {

@@ -4,6 +4,7 @@ import api from "../api/axios";
 export default function ProductForm({ categories, editingProduct, setEditingProduct, load }) {
     const [form, setForm] = useState({
         name: "",
+        oldPrice: "",
         price: "",
         image: null,
         description: "",
@@ -17,6 +18,7 @@ export default function ProductForm({ categories, editingProduct, setEditingProd
         if (editingProduct) {
             setForm({
                 name: editingProduct.name,
+                oldPrice: editingProduct.oldPrice,
                 price: editingProduct.price,
                 description: editingProduct.description,
                 stock: editingProduct.stock,
@@ -32,6 +34,7 @@ export default function ProductForm({ categories, editingProduct, setEditingProd
     const resetForm = () => {
         setForm({
             name: "",
+            oldPrice: "",
             price: "",
             image: null,
             description: "",
@@ -57,6 +60,10 @@ export default function ProductForm({ categories, editingProduct, setEditingProd
         setLoading(true);
         const data = new FormData();
         data.append("name", form.name);
+        // campo opcional
+        if (form.oldPrice && Number(form.oldPrice) > Number(form.price)) {
+            data.append("oldPrice", form.oldPrice);
+        }
         data.append("price", form.price);
         data.append("description", form.description);
         data.append("stock", form.stock);
@@ -87,11 +94,38 @@ export default function ProductForm({ categories, editingProduct, setEditingProd
             <h2>{editingProduct ? "Editar producto" : "Crear producto"}</h2>
             {error && <div className="error-message" style={{ color: "red", marginBottom: "10px" }}>{error}</div>}
             <form onSubmit={submit} className="admin-form">
+                <div className="input-group">
+                    <input
+                        placeholder="Nombre"
+                        value={form.name}
+                        maxLength={40}
+                        onChange={(e) =>
+                            setForm({ ...form, name: e.target.value })
+                        }
+                        required
+                    />
+                    <small>
+                        {form.name.length}/40
+                    </small>
+                </div>
+                <div className="input-group">
+                    <input
+                        placeholder="Descripción (opcional)"
+                        value={form.description}
+                        maxLength={100}
+                        onChange={e => setForm({ ...form, description: e.target.value })}
+                    /> 
+                    <small>
+                        {form.description.length}/100
+                    </small>
+                </div>
                 <input
-                    placeholder="Nombre"
-                    value={form.name}
-                    onChange={e => setForm({ ...form, name: e.target.value })}
-                    required
+                    type="number"
+                    placeholder="Precio anterior (opcional)"
+                    value={form.oldPrice}
+                    onChange={(e) =>
+                        setForm({ ...form, oldPrice: e.target.value })
+                    }
                 />
                 <input
                     placeholder="Precio"
@@ -116,11 +150,6 @@ export default function ProductForm({ categories, editingProduct, setEditingProd
                     type="file"
                     accept="image/*"
                     onChange={e => setForm({ ...form, image: e.target.files[0] })}
-                />
-                <input
-                    placeholder="Descripción"
-                    value={form.description}
-                    onChange={e => setForm({ ...form, description: e.target.value })}
                 />
                 <input
                     placeholder="Stock"

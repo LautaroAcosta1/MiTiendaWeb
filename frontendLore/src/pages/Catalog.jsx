@@ -206,9 +206,22 @@ export default function Catalog() {
                   <img src={p.image} />
                 </div>
 
-                <h2>{p.name}</h2>
-                <p>{p.description}</p>
-                <span>${p.price}</span>
+                <div className="card-body">
+                  <h2>{p.name}</h2>
+
+                  <p>{p.description}</p>
+
+                  <div className="price-box">
+                    {p.oldPrice && (
+                      <span className="old-price">
+                        ${p.oldPrice}
+                      </span>
+                    )}
+                    <span className="current-price">
+                      ${p.price}
+                    </span>
+                  </div>
+                </div>
 
                 <button className="btn" onClick={() => addToCart(p)}>
                   Agregar

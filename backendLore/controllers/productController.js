@@ -16,7 +16,7 @@ export const createProduct = async (req, res) => {
     console.log("BODY:", req.body);
     console.log("FILE:", req.file);
 
-    const { name, price, description, stock, category } = req.body;
+    const { name, price, oldPrice, description, stock, category } = req.body;
 
     if (!category) {
       return res.status(400).json({ error: "La categoría es obligatoria" });
@@ -31,6 +31,7 @@ export const createProduct = async (req, res) => {
     const product = await Product.create({
       name,
       price,
+      oldPrice,
       description,
       stock,
       category,
@@ -74,7 +75,7 @@ export const updateProduct = async (req, res) => {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
 
-    const { name, price, description, stock, category } = req.body;
+    const { name, price, oldPrice, description, stock, category } = req.body;
 
     if (!category) {
       return res.status(400).json({ error: "La categoría es obligatoria" });
@@ -91,6 +92,7 @@ export const updateProduct = async (req, res) => {
     }
 
     product.name = name;
+    product.oldPrice = oldPrice;    
     product.price = price;
     product.description = description;
     product.stock = stock;
