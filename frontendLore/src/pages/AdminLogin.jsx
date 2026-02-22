@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 
 export default function AdminLogin() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ export default function AdminLogin() {
     e.preventDefault();
 
     const res = await api.post("/auth/login", {
-      username,
+      email,
       password
     });
 
@@ -26,9 +26,9 @@ export default function AdminLogin() {
 
       <form onSubmit={submit}>
         <input
-          placeholder="Usuario"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
 
         <input
@@ -38,7 +38,7 @@ export default function AdminLogin() {
           onChange={e => setPassword(e.target.value)}
         />
 
-        <button>Entrar</button>
+        <button type="submit">Entrar</button>
       </form>
     </div>
   );

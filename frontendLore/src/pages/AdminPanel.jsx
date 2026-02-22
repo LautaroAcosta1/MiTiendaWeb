@@ -66,9 +66,14 @@ export default function AdminPanel() {
         {/* ===== TOP ===== */}
         <div className="admin-top">
           <h1>Panel Admin</h1>
-          <button className="logout-btn" onClick={logout}>
-            Cerrar sesión
-          </button>
+          <div className="btn-group">
+            <button className="catalog-btn" onClick={() => navigate("/")}>
+              Ir al Catálogo
+            </button>
+            <button className="logout-btn" onClick={logout}>
+              Cerrar sesión
+            </button>
+          </div>
         </div>
 
         {/* ===== LOADING / ERROR ===== */}

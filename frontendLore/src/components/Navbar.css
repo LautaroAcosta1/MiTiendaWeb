@@ -34,6 +34,23 @@
   font-size: 11px;
 }
 
+.btn-group-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.admin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 21px;
+  color: #000000;
+  border: none;
+  margin-top: 8px;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;

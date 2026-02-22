@@ -3,7 +3,10 @@ import cloudinary from "../config/cloudinary.js";
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("category");
+    const products = await Product.find({
+      store: req.user.storeId
+    }).populate("category");
+
     res.json(products);
   } catch (err) {
     console.log("ERROR READ:", err);
@@ -11,11 +14,10 @@ export const getProducts = async (req, res) => {
   }
 };
 
+import Category from "../models/Category.js";
+
 export const createProduct = async (req, res) => {
   try {
-    console.log("BODY:", req.body);
-    console.log("FILE:", req.file);
-
     const { name, price, oldPrice, description, stock, category } = req.body;
 
     if (!category) {
@@ -24,6 +26,16 @@ export const createProduct = async (req, res) => {
 
     if (!req.file) {
       return res.status(400).json({ error: "La imagen es obligatoria" });
+    }
+
+    // se valida que la categoría pertenece a la tienda
+    const categoryExists = await Category.findOne({
+      _id: category,
+      store: req.user.storeId
+    });
+
+    if (!categoryExists) {
+      return res.status(400).json({ error: "Categoría inválida" });
     }
 
     const result = await cloudinary.uploader.upload(req.file.path);
@@ -37,9 +49,11 @@ export const createProduct = async (req, res) => {
       category,
       image: result.secure_url,
       imageId: result.public_id,
+      store: req.user.storeId
     });
 
     res.json(product);
+
   } catch (err) {
     console.log("ERROR CREATE:", err);
     res.status(500).json({ error: "Error al crear producto" });
@@ -48,7 +62,10 @@ export const createProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findOne({
+      _id: req.params.id,
+      store: req.user.storeId
+    });
 
     if (!product) {
       return res.status(404).json({ error: "Producto no encontrado" });
@@ -58,9 +75,13 @@ export const deleteProduct = async (req, res) => {
       await cloudinary.uploader.destroy(product.imageId);
     }
 
-    await Product.findByIdAndDelete(req.params.id);
+    await Product.deleteOne({
+      _id: req.params.id,
+      store: req.user.storeId
+    });
 
     res.json({ message: "Producto eliminado" });
+
   } catch (err) {
     console.log("ERROR DELETE:", err);
     res.status(500).json({ error: "Error al eliminar producto" });
@@ -69,7 +90,10 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findOne({
+      _id: req.params.id,
+      store: req.user.storeId
+    });
 
     if (!product) {
       return res.status(404).json({ error: "Producto no encontrado" });
@@ -77,8 +101,14 @@ export const updateProduct = async (req, res) => {
 
     const { name, price, oldPrice, description, stock, category } = req.body;
 
-    if (!category) {
-      return res.status(400).json({ error: "La categoría es obligatoria" });
+    // se valida categoría
+    const categoryExists = await Category.findOne({
+      _id: category,
+      store: req.user.storeId
+    });
+
+    if (!categoryExists) {
+      return res.status(400).json({ error: "Categoría inválida" });
     }
 
     if (req.file) {
@@ -92,7 +122,7 @@ export const updateProduct = async (req, res) => {
     }
 
     product.name = name;
-    product.oldPrice = oldPrice;    
+    product.oldPrice = oldPrice;
     product.price = price;
     product.description = description;
     product.stock = stock;
@@ -101,6 +131,7 @@ export const updateProduct = async (req, res) => {
     await product.save();
 
     res.json(product);
+
   } catch (err) {
     console.log("ERROR UPDATE:", err);
     res.status(500).json({ error: "Error al actualizar" });

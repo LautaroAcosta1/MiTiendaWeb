@@ -1,18 +1,11 @@
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 export default function Navbar({ search, setSearch, cartCount, toggleCart }) {
   return (
     <nav className="navbar">
       <div className="nav-logo">TiendaLore</div>
 
-{/*
-      <input
-        className="nav-search"
-        placeholder="Buscar productos..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-      />
-*/}
       <div className="group">
         <svg viewBox="0 0 24 24" aria-hidden="true" className="icon">
           <g>
@@ -30,15 +23,24 @@ export default function Navbar({ search, setSearch, cartCount, toggleCart }) {
       </div>
       
 
-      <div className="nav-actions">
-        <div className="nav-cart">
-            <span>{cartCount}</span>
-        </div>
+        <div className="btn-group-nav">
 
-        <button className="nav-burger" onClick={toggleCart}>
-            <i className="fi fi-sr-shopping-cart"></i>
-        </button>
-      </div>
+          <Link to="/admin/panel" className="admin-btn">
+            <i class="fi fi-sr-settings"></i>
+          </Link>
+
+          <div className="nav-actions">
+            <div className="nav-cart">
+                <span>{cartCount}</span>
+            </div>
+
+            <button className="nav-burger" onClick={toggleCart}>
+              <i className="fi fi-sr-shopping-cart"></i>
+            </button>
+          </div>
+
+        </div>
+        
     </nav>
   );
 }

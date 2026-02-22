@@ -1,24 +1,92 @@
-import Admin from "../models/Admin.js";
+import User from "../models/User.js";
+import Store from "../models/Store.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import slugify from "slugify";
 
-export const login = async (req, res) => {
+export const register = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { name, email, password, storeName } = req.body;
 
-    const admin = await Admin.findOne({ username });
-    if (!admin) return res.status(404).json({ msg: "No existe" });
+    // 1️⃣ Verificar email único
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email ya registrado" });
+    }
 
-    const ok = await bcrypt.compare(password, admin.password);
-    if (!ok) return res.status(401).json({ msg: "Password incorrecta" });
+    // 2️⃣ Generar slug base
+    let baseSlug = slugify(storeName, { lower: true, strict: true });
 
-    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
-      expiresIn: "2h"
+    let slug = baseSlug;
+    let counter = 1;
+
+    // 3️⃣ Asegurar slug único
+    while (await Store.findOne({ slug })) {
+      slug = `${baseSlug}-${counter++}`;
+    }
+
+    // 4️⃣ Crear tienda
+    const store = await Store.create({
+      name: storeName,
+      slug
     });
 
-    res.json({ token });
+    // 5️⃣ Crear usuario vinculado
+    const user = await User.create({
+      name,
+      email,
+      password,
+      store: store._id
+    });
+
+    // 6️⃣ Crear JWT
+    const token = jwt.sign(
+      { userId: user._id, storeId: store._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.status(201).json({
+      token,
+      store: {
+        name: store.name,
+        slug: store.slug
+      }
+    });
+
   } catch (err) {
-    res.status(500).json({ msg: "Error login" });
+    console.log("REGISTER ERROR:", err);
+    res.status(500).json({ error: "Error en registro" });
   }
 };
 
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ msg: "Usuario no existe" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).json({ msg: "Password incorrecta" });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        storeId: user.store
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "2h" }
+    );
+
+    res.json({ token });
+
+  } catch (err) {
+    console.log("LOGIN ERROR:", err);
+    res.status(500).json({ msg: "Error en login" });
+  }
+};

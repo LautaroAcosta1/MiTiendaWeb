@@ -4,7 +4,7 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/", getCategories);
+router.get("/", auth, getCategories);
 router.post("/", auth, createCategory);
 router.delete("/:id", auth, deleteCategory);
 

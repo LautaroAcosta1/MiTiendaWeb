@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo conectado"))
   .catch(err => console.log(err));
 
+app.use("/api", publicRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);

@@ -70,6 +70,20 @@ body {
   margin: 0;
 }
 
+.btn-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-top .catalog-btn {
+  margin-right: 8px;
+  background-color: #000000;
+}
+
+.admin-top .catalog-btn:hover {
+  background-color: #1c1c1c;
+}
+
 .admin-top .logout-btn {
   background-color: #ff0000;
 }
