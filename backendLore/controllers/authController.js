@@ -49,8 +49,14 @@ export const register = async (req, res) => {
     res.status(201).json({
       token,
       store: {
+        id: store._id,
         name: store.name,
         slug: store.slug
+      },
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
       }
     });
 
@@ -64,7 +70,8 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    // 🔹 Buscamos el usuario y traemos su tienda
+    const user = await User.findOne({ email }).populate("store");
     if (!user) {
       return res.status(404).json({ msg: "Usuario no existe" });
     }
@@ -77,13 +84,20 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       {
         id: user._id,
-        storeId: user.store
+        storeId: user.store._id
       },
       process.env.JWT_SECRET,
       { expiresIn: "2h" }
     );
 
-    res.json({ token });
+    // 🔹 Ahora devolvemos también la tienda
+    res.json({
+      token,
+      store: {
+        name: user.store.name,
+        slug: user.store.slug
+      }
+    });
 
   } catch (err) {
     console.log("LOGIN ERROR:", err);

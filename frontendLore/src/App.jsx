@@ -1,25 +1,30 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Catalog from "./pages/Catalog";
 import AdminLogin from "./pages/AdminLogin";
+import AdminRegister from "./pages/AdminRegister";
 import AdminPanel from "./pages/AdminPanel";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Catalog />} />
-        <Route path="/admin" element={<AdminLogin />} />
-        <Route
-          path="/admin/panel"
-          element={
-            <ProtectedRoute>
-              <AdminPanel />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/register" element={<AdminRegister />} />
+          <Route
+            path="/:slug/admin/panel"
+            element={
+              <ProtectedRoute>
+                <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/:slug" element={<Catalog />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

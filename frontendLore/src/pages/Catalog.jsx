@@ -1,29 +1,34 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
 import "./Catalog.css";
 
 export default function Catalog() {
+  const { slug } = useParams();
+
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [cart, setCart] = useState(() => {
-    const saved = localStorage.getItem("cart");
+    const saved = localStorage.getItem(`cart-${slug}`);
     return saved ? JSON.parse(saved) : [];
   });
 
   const [cartOpen, setCartOpen] = useState(false);
 
-
   useEffect(() => {
+    if (!slug) return;
+
     setLoading(true);
+
     Promise.all([
-      api.get("/products"),
-      api.get("/categories")
+      api.get(`/stores/${slug}/products`),
+      api.get(`/stores/${slug}/categories`)
     ])
       .then(([resProducts, resCategories]) => {
         setProducts(resProducts.data);
@@ -32,16 +37,17 @@ export default function Catalog() {
       })
       .catch(err => {
         console.error(err);
-        setError("Error cargando el catálogo. Inténtalo más tarde.");
+        setError("Tienda no encontrada o error cargando datos.");
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+
+  }, [slug]);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    localStorage.setItem(`cart-${slug}`, JSON.stringify(cart));
+  }, [cart, slug]);
 
 
   const filteredProducts = products.filter(p => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
 import "./Admin.css";
 import CategoryManager from "../components/CategoryManager";
@@ -16,6 +16,10 @@ export default function AdminPanel() {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+
+  const { slug } = useParams();
+
+  const slugStore = localStorage.getItem("storeSlug");
 
   useEffect(() => {
     load();
@@ -57,7 +61,7 @@ export default function AdminPanel() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/admin");
+    navigate(`/admin`);
   };
 
   return (
@@ -67,7 +71,7 @@ export default function AdminPanel() {
         <div className="admin-top">
           <h1>Panel Admin</h1>
           <div className="btn-group">
-            <button className="catalog-btn" onClick={() => navigate("/")}>
+            <button className="catalog-btn" onClick={() => navigate(`/${slugStore}`)}>
               Ir al Catálogo
             </button>
             <button className="logout-btn" onClick={logout}>

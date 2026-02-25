@@ -1,7 +1,12 @@
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar({ search, setSearch, cartCount, toggleCart }) {
+  const { slug } = useParams();
+  const { isAuthenticated } = useAuth();
+
   return (
     <nav className="navbar">
       <div className="nav-logo">TiendaLore</div>
@@ -25,9 +30,11 @@ export default function Navbar({ search, setSearch, cartCount, toggleCart }) {
 
         <div className="btn-group-nav">
 
-          <Link to="/admin/panel" className="admin-btn">
-            <i class="fi fi-sr-settings"></i>
-          </Link>
+          {isAuthenticated && (
+            <Link to={`/${slug}/admin/panel`} className="admin-btn">
+              <i className="fi fi-sr-settings"></i>
+            </Link>
+          )}
 
           <div className="nav-actions">
             <div className="nav-cart">

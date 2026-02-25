@@ -6,33 +6,32 @@ export const getPublicStore = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    // busca tienda por slug
-    const store = await Store.findOne({ slug }).select(
-      "name slug logo theme"
-    );
-
+    const store = await Store.findOne({ slug });
     if (!store) {
       return res.status(404).json({ error: "Tienda no encontrada" });
     }
 
-    // busca categorías de esa tienda
     const categories = await Category.find({
       store: store._id
-    }).select("name");
+    }).sort({ name: 1 });
 
-    // busca productos de esa tienda
     const products = await Product.find({
       store: store._id
-    }).populate("category", "name");
+    }).populate("category");
 
     res.json({
-      store,
+      store: {
+        name: store.name,
+        slug: store.slug
+      },
       categories,
       products
     });
 
   } catch (err) {
-    console.log("ERROR PUBLIC STORE:", err);
-    res.status(500).json({ error: "Error al cargar la tienda" });
+    res.status(500).json({
+      error: "Error obteniendo tienda",
+      details: err.message
+    });
   }
 };

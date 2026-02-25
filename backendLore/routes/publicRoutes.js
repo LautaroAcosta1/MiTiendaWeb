@@ -3,6 +3,6 @@ import { getPublicStore } from "../controllers/publicController.js";
 
 const router = express.Router();
 
-router.get("/store/:slug", getPublicStore);
+router.get("/:slug", getPublicStore);
 
 export default router;
