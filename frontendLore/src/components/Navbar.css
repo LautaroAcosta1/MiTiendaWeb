@@ -9,7 +9,7 @@
   padding: 0 20px;
   height: 70px;
   z-index: 100;
-
+  
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -22,11 +22,6 @@
   justify-self: start;
   font-weight: 700;
   font-size: 18px;
-}
-
-.logo-img {
-  height: 40px;
-  object-fit: contain;
 }
 
 .nav-cart {
