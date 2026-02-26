@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 export default function StoreSettings() {
+  const [name, setName] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("");
   const [whatsappMessage, setWhatsappMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ export default function StoreSettings() {
     const fetchSettings = async () => {
       try {
         const res = await api.get("/store/settings");
+        setName(res.data.name || "");
         setWhatsappNumber(res.data.whatsappNumber || "");
         setWhatsappMessage(res.data.whatsappMessage || "");
       } catch (err) {
@@ -36,6 +38,7 @@ export default function StoreSettings() {
 
     try {
       await api.put("/store/settings", {
+        name,
         whatsappNumber,
         whatsappMessage,
       });
@@ -53,6 +56,17 @@ export default function StoreSettings() {
   return (
     <div style={{ maxWidth: "500px", margin: "40px auto" }}>
       <h2>Configuración de la Tienda</h2>
+
+      <div style={{ marginBottom: "20px" }}>
+        <label>Nombre visible de la tienda</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          style={{ width: "100%", padding: "8px" }}
+        />
+      </div>
 
       <form onSubmit={handleSave}>
         <div style={{ marginBottom: "20px" }}>

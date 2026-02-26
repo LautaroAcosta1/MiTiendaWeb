@@ -62,11 +62,16 @@ router.get("/stores/:slug/categories", async (req, res) => {
 
 router.put("/store/settings", authMiddleware, async (req, res) => {
   try {
-    const { whatsappNumber, whatsappMessage } = req.body;
+    const { name, whatsappNumber, whatsappMessage } = req.body;
+
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ msg: "El nombre de la tienda es obligatorio" });
+    }
 
     const store = await Store.findByIdAndUpdate(
       req.user.storeId,
       {
+        name: name.trim(),
         whatsappNumber,
         whatsappMessage,
       },
@@ -74,6 +79,7 @@ router.put("/store/settings", authMiddleware, async (req, res) => {
     );
 
     res.json(store);
+
   } catch (err) {
     res.status(500).json({ msg: "Error actualizando configuración" });
   }

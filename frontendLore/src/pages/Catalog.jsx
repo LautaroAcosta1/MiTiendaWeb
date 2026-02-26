@@ -114,6 +114,7 @@ export default function Catalog() {
   return (
     <>
       <Navbar
+        storeName={store?.name}
         search={search}
         setSearch={setSearch}
         cartCount={cart.reduce((a, b) => a + b.qty, 0)}

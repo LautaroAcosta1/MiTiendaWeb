@@ -3,19 +3,30 @@
 .navbar {
   position: sticky;
   top: 0;
-  background: white;
-  padding: 14px 24px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.1);
+  padding: 0 20px;
+  height: 70px;
   z-index: 100;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.nav-logo {
+.nav-name {
+  justify-self: start;
   font-weight: 700;
   font-size: 18px;
+}
+
+.logo-img {
+  height: 40px;
+  object-fit: contain;
 }
 
 .nav-cart {
@@ -35,6 +46,7 @@
 }
 
 .btn-group-nav {
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 32px;
@@ -82,6 +94,7 @@
 }
 
 .group {
+  justify-self: center;
   display: flex;
   line-height: 20px;
   align-items: center;

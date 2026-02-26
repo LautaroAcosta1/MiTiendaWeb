@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export default function Navbar({ search, setSearch, cartCount, toggleCart }) {
+export default function Navbar({ storeName, search, setSearch, cartCount, toggleCart }) {
   const { slug } = useParams();
   const { isAuthenticated } = useAuth();
 
   return (
     <nav className="navbar">
-      <div className="nav-logo">TiendaLore</div>
+      <div className="nav-name">
+        {storeName || "Cargando..."}
+      </div>
 
       <div className="group">
         <svg viewBox="0 0 24 24" aria-hidden="true" className="icon">
