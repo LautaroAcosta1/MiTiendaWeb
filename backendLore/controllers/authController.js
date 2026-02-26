@@ -6,7 +6,17 @@ import slugify from "slugify";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, storeName } = req.body;
+    const { name, email, password, storeName, whatsappNumber } = req.body;
+
+    // 🔹 Validación básica
+    if (!whatsappNumber) {
+      return res.status(400).json({ error: "WhatsApp es obligatorio" });
+    }
+
+    const phoneRegex = /^[0-9]{10,15}$/;
+    if (!phoneRegex.test(whatsappNumber)) {
+      return res.status(400).json({ error: "Número de WhatsApp inválido" });
+    }
 
     // 1️⃣ Verificar email único
     const existingUser = await User.findOne({ email });
@@ -16,7 +26,6 @@ export const register = async (req, res) => {
 
     // 2️⃣ Generar slug base
     let baseSlug = slugify(storeName, { lower: true, strict: true });
-
     let slug = baseSlug;
     let counter = 1;
 
@@ -25,10 +34,12 @@ export const register = async (req, res) => {
       slug = `${baseSlug}-${counter++}`;
     }
 
-    // 4️⃣ Crear tienda
+    // 4️⃣ Crear tienda (ahora con WhatsApp)
     const store = await Store.create({
       name: storeName,
-      slug
+      slug,
+      whatsappNumber,
+      whatsappMessage: "Hola! Quiero hacer un pedido:"
     });
 
     // 5️⃣ Crear usuario vinculado

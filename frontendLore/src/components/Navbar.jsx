@@ -31,8 +31,14 @@ export default function Navbar({ search, setSearch, cartCount, toggleCart }) {
         <div className="btn-group-nav">
 
           {isAuthenticated && (
-            <Link to={`/${slug}/admin/panel`} className="admin-btn">
+            <Link to={`/${slug}/admin/settings`} className="settings-btn">
               <i className="fi fi-sr-settings"></i>
+            </Link>
+          )}
+
+          {isAuthenticated && (
+            <Link to={`/${slug}/admin/panel`} className="admin-btn">
+              <i className="fi fi-sr-apps"></i>
             </Link>
           )}
 

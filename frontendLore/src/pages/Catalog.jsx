@@ -13,6 +13,7 @@ export default function Catalog() {
   const [category, setCategory] = useState("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [store, setStore] = useState(null);
 
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem(`cart-${slug}`);
@@ -27,10 +28,12 @@ export default function Catalog() {
     setLoading(true);
 
     Promise.all([
+      api.get(`/stores/${slug}`),
       api.get(`/stores/${slug}/products`),
       api.get(`/stores/${slug}/categories`)
     ])
-      .then(([resProducts, resCategories]) => {
+      .then(([resStore, resProducts, resCategories]) => {
+        setStore(resStore.data);
         setProducts(resProducts.data);
         setCategories(resCategories.data);
         setError(null);
@@ -86,15 +89,20 @@ export default function Catalog() {
     : 0;
 
 
-  const whatsappMessage = encodeURIComponent(
-    cart.map(p => `• ${p.name} x${p.qty} - $${p.price * p.qty}`).join("\n") +
-    `\n\nTotal: $${total}`
-  );
+  const whatsappMessage = store
+    ? `
+  ${store.whatsappMessage || "Hola! Quiero hacer un pedido:"}
+
+  ${cart.map(item => `- ${item.name} x${item.qty}`).join("\n")}
+
+  Total estimado: $${total}
+  `
+    : "";
 
   const buyWhatsapp = () => {
-    if (cart.length === 0) return;
+    if (!store || cart.length === 0) return;
 
-    const url = `https://wa.me/5491167632352?text=${whatsappMessage}`;
+    const url = `https://wa.me/${store.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(url, "_blank");
   };
 

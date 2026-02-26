@@ -45,10 +45,25 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  font-size: 21px;
   color: #000000;
   border: none;
   margin-top: 8px;
+  margin-right: 8px;
+}
+
+.admin-btn i {
+  font-size: 19.5px;
+}
+
+.settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #000000;
+  border: none;
+  margin-top: 8px;
+  font-size: 19.5px;
 }
 
 .nav-actions {

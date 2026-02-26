@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function AdminRegister() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [storeName, setStoreName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,7 +18,7 @@ export default function AdminRegister() {
   const submit = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !storeName || !password) {
+    if (!name || !email || !storeName || !password || !whatsappNumber) {
       setError("Todos los campos son obligatorios");
       return;
     }
@@ -34,6 +35,7 @@ export default function AdminRegister() {
       const res = await api.post("/auth/register", {
         name,
         email,
+        whatsappNumber,
         password,
         storeName
       });
@@ -67,6 +69,14 @@ export default function AdminRegister() {
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+        />
+
+        <input
+          type="text"
+          value={whatsappNumber}
+          onChange={(e) => setWhatsappNumber(e.target.value)}
+          placeholder="549..."
+          required
         />
 
         <input

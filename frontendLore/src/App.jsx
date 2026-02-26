@@ -5,6 +5,7 @@ import AdminRegister from "./pages/AdminRegister";
 import AdminPanel from "./pages/AdminPanel";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import StoreSettings from "./components/StoreSettings";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/register" element={<AdminRegister />} />
+          <Route path="/:slug/admin/settings" element={<StoreSettings />} />
           <Route
             path="/:slug/admin/panel"
             element={
