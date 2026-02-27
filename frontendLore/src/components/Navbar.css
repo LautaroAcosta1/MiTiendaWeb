@@ -1,130 +1,147 @@
+/* Navbar.css */
 .navbar {
   position: sticky;
   top: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 70px;
+  padding: 16px 40px;
   z-index: 100;
-  
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all var(--transition-normal);
 }
 
 .nav-name {
-  justify-self: start;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 20px;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
 }
 
-.nav-cart {
-  font-size: 18px;
-  margin-bottom: 15px;
+.group {
+  flex: 1;
+  max-width: 500px;
   position: relative;
-  cursor: pointer;
+  margin: 0 24px;
 }
 
-.nav-cart span {
-  background: #1ebe5d;
-  color: white;
-  border-radius: 999px;
-  padding: 2px 7px;
-  margin-left: 5px;
-  font-size: 11px;
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px 0 44px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 15px;
+  transition: all var(--transition-fast);
 }
 
-.btn-group-nav {
-  justify-self: end;
-  display: flex;
-  align-items: center;
-  gap: 32px;
+.input::placeholder {
+  color: var(--text-tertiary);
 }
 
-.admin-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #000000;
-  border: none;
-  margin-top: 8px;
-  margin-right: 8px;
+.input:focus {
+  outline: none;
+  background-color: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
-.admin-btn i {
-  font-size: 19.5px;
-}
-
-.settings-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #000000;
-  border: none;
-  margin-top: 8px;
-  font-size: 19.5px;
+.icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: var(--text-tertiary);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+}
+
+.nav-cart {
+  color: var(--text-primary);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-cart span {
+  position: absolute;
+  top: 1;
+  margin-bottom: 24px;
+  right: -44px;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 999px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.btn-group-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-btn,
+.settings-btn {
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
 }
 
 .nav-burger {
-  font-size: 22px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-top: 9px;
-  margin-left: -50px;
-}
-
-.group {
-  justify-self: center;
+  color: var(--text-secondary);
   display: flex;
-  line-height: 20px;
   align-items: center;
-  position: relative;
-  max-width: 400px;
+  justify-content: center;
+  padding: 8px;
+  border: none;
+  background-color: transparent;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  cursor: pointer;
 }
 
-.input {
-  width: 400px;
-  height: 40px;
-  line-height: 20px;
-  padding: 0 1rem;
-  padding-left: 2.5rem;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  outline: none;
-  background-color: #f4f6fb;
-  color: #000000;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.396);
-  transition: 0.3s ease;
+.admin-btn:hover,
+.settings-btn:hover,
+.nav-burger:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
-.input::placeholder {
-  color: #6c6c6d;
+.admin-btn i,
+.settings-btn i,
+.nav-burger i {
+  font-size: 20px;
 }
 
-.input:focus,
-input:hover {
-  outline: none;
-  border-color: rgba(0, 47, 73, 0.192);
-  background-color: #fff;
-}
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
 
-.icon {
-  position: absolute;
-  left: 1rem;
-  fill: #6c6c6d;
-  width: 1rem;
-  height: 1rem;
+  .group {
+    order: 3;
+    max-width: 100%;
+    margin: 0;
+  }
 }

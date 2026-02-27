@@ -10,7 +10,7 @@ export default function StoreSettings() {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
-  // 🔹 Cargar configuración actual
+  // cargar configuración actual
   useEffect(() => {
     const fetchSettings = async () => {
       try {
@@ -28,7 +28,7 @@ export default function StoreSettings() {
     fetchSettings();
   }, []);
 
-  // 🔹 Guardar cambios
+  // guardar cambios
   const handleSave = async (e) => {
     e.preventDefault();
 

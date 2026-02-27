@@ -67,7 +67,7 @@ export default function AdminPanel() {
   return (
     <div className="admin-page">
       <div className="admin-container">
-        {/* ===== TOP ===== */}
+        {/* ================== TOP ==================== */}
         <div className="admin-top">
           <h1>Panel Admin</h1>
           <div className="btn-group">
@@ -80,7 +80,7 @@ export default function AdminPanel() {
           </div>
         </div>
 
-        {/* ===== LOADING / ERROR ===== */}
+        {/* ===================== LOADING / ERROR ================= */}
         {loading ? (
           <p>Cargando datos del panel...</p>
         ) : error ? (
@@ -89,7 +89,7 @@ export default function AdminPanel() {
             <button onClick={load}>Reintentar</button>
           </div>
         ) : (
-          /* ===== GRID ===== */
+          /* ======================= GRID ==================== */
           <div className="admin-grid">
             <CategoryManager
               categories={categories}

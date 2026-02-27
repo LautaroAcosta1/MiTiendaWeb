@@ -21,10 +21,9 @@ export default function AdminLogin() {
 
       const { token, store } = res.data;
 
-      // 🔥 Guardamos usando el contexto (no localStorage directo)
+      // guardamos usando el contexto (no localStorage directo)
       login(token, { store });
 
-      // Opcional: si querés seguir guardando el slug separado
       localStorage.setItem("storeSlug", store.slug);
 
       navigate(`/${store.slug}/admin/panel`);
