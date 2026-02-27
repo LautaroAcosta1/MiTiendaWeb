@@ -24,6 +24,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 
-app.listen(3001, () => {
-  console.log("Server corriendo en puerto 3001");
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

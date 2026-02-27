@@ -34,35 +34,38 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="adminLogin-container">
-      <h1>Admin Login</h1>
+    <div className="admin-page">
+      <div className="adminLogin-container">
+        <h1>Admin Login</h1>
 
-      <form onSubmit={submit}>
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form onSubmit={submit}>
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button type="submit">Entrar</button>
+          <button type="submit">Entrar</button>
 
-        <p style={{ marginTop: "15px" }}>
-          ¿No tienes cuenta?{" "}
-          <span
-            style={{ color: "blue", cursor: "pointer" }}
-            onClick={() => navigate("/admin/register")}
-          >
-            Crear cuenta
-          </span>
-        </p>
-      </form>
+          <p style={{ marginTop: "15px" }}>
+            ¿No tienes cuenta?{" "}
+            <span
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={() => navigate("/admin/register")}
+            >
+              Crear cuenta
+            </span>
+          </p>
+        </form>
+      </div>
     </div>
+
   );
 }

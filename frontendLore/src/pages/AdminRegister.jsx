@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
+
 export default function AdminRegister() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -53,56 +54,59 @@ export default function AdminRegister() {
   };
 
   return (
-    <div className="adminLogin-container">
-      <h1>Crear Cuenta</h1>
+    <div className="admin-page">
+      <div className="adminLogin-container">
+        <h1>Crear Cuenta</h1>
 
-      <form onSubmit={submit}>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <form onSubmit={submit}>
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <input
-          placeholder="Nombre"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
+          <input
+            placeholder="Nombre"
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
 
-        <input
-          type="text"
-          value={whatsappNumber}
-          onChange={(e) => setWhatsappNumber(e.target.value)}
-          placeholder="549..."
-          required
-        />
+          <input
+            type="text"
+            value={whatsappNumber}
+            onChange={(e) => setWhatsappNumber(e.target.value)}
+            placeholder="549..."
+            required
+          />
 
-        <input
-          placeholder="Nombre de tu tienda"
-          value={storeName}
-          onChange={e => setStoreName(e.target.value)}
-        />
+          <input
+            placeholder="Nombre de tu tienda"
+            value={storeName}
+            onChange={e => setStoreName(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Confirmar Password"
-          value={confirmPassword}
-          onChange={e => setConfirmPassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Confirmar Password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Creando..." : "Crear Cuenta"}
-        </button>
-      </form>
+          <button type="submit" disabled={loading}>
+            {loading ? "Creando..." : "Crear Cuenta"}
+          </button>
+        </form>
+      </div>
     </div>
+
   );
 }
