@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://mitiendaweb.onrender.com/",
+  baseURL: "https://mitiendaweb.onrender.com/api",
 });
 
 api.interceptors.request.use(
