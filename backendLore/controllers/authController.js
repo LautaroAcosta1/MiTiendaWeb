@@ -8,7 +8,7 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, storeName, whatsappNumber } = req.body;
 
-    // 🔹 Validación básica
+    // validación básica
     if (!whatsappNumber) {
       return res.status(400).json({ error: "WhatsApp es obligatorio" });
     }
@@ -18,23 +18,23 @@ export const register = async (req, res) => {
       return res.status(400).json({ error: "Número de WhatsApp inválido" });
     }
 
-    // 1️⃣ Verificar email único
+    // verificar email único
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email ya registrado" });
     }
 
-    // 2️⃣ Generar slug base
+    // generar slug base
     let baseSlug = slugify(storeName, { lower: true, strict: true });
     let slug = baseSlug;
     let counter = 1;
 
-    // 3️⃣ Asegurar slug único
+    // asegurar slug único
     while (await Store.findOne({ slug })) {
       slug = `${baseSlug}-${counter++}`;
     }
 
-    // 4️⃣ Crear tienda (ahora con WhatsApp)
+    // creear tienda
     const store = await Store.create({
       name: storeName,
       slug,
@@ -42,7 +42,7 @@ export const register = async (req, res) => {
       whatsappMessage: "Hola! Quiero hacer un pedido:"
     });
 
-    // 5️⃣ Crear usuario vinculado
+    // crear usuario vinculado
     const user = await User.create({
       name,
       email,
@@ -50,7 +50,7 @@ export const register = async (req, res) => {
       store: store._id
     });
 
-    // 6️⃣ Crear JWT
+    // crear JWT
     const token = jwt.sign(
       { userId: user._id, storeId: store._id },
       process.env.JWT_SECRET,
@@ -81,7 +81,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 🔹 Buscamos el usuario y traemos su tienda
+    // buscamos el usuario y traemos su tienda
     const user = await User.findOne({ email }).populate("store");
     if (!user) {
       return res.status(404).json({ msg: "Usuario no existe" });
@@ -101,7 +101,7 @@ export const login = async (req, res) => {
       { expiresIn: "2h" }
     );
 
-    // 🔹 Ahora devolvemos también la tienda
+    // devuelve tienda
     res.json({
       token,
       store: {

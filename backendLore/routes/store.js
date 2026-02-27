@@ -6,7 +6,7 @@ import authMiddleware from "../middleware/auth.js"
 
 const router = express.Router();
 
-// 🔹 Obtener tienda pública por slug
+// obtener tienda pública por slug
 router.get("/stores/:slug", async (req, res) => {
   try {
     const store = await Store.findOne({ slug: req.params.slug });
@@ -22,7 +22,7 @@ router.get("/stores/:slug", async (req, res) => {
   }
 });
 
-// 🔹 Obtener productos por slug
+// obtener productos por slug
 router.get("/stores/:slug/products", async (req, res) => {
   try {
     const store = await Store.findOne({ slug: req.params.slug });
@@ -42,7 +42,7 @@ router.get("/stores/:slug/products", async (req, res) => {
 });
 
 
-// 🔹 Obtener categorías por slug
+// obtener categorías por slug
 router.get("/stores/:slug/categories", async (req, res) => {
   try {
     const store = await Store.findOne({ slug: req.params.slug });
